@@ -18,10 +18,12 @@
   },
   "dependencies": {
     "@internal/api-schema": "workspace:*",
-    "@internal/events-schema": "workspace:*"
+    "@internal/events-schema": "workspace:*",
+    "openai": "^5.12.2"
   },
   "devDependencies": {
     "@internal/cdk-utils": "workspace:*",
-    "@internal/tsconfig": "workspace:*"
+    "@internal/tsconfig": "workspace:*",
+    "@types/node": "^22.16.3"
   }
 }

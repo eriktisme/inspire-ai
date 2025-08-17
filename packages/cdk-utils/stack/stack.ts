@@ -49,33 +49,6 @@ export class Stack extends BaseStack {
     this.serviceName = props.serviceName
   }
 
-  getDelegatedHostedZone(zoneName: string): IPublicHostedZone {
-    const hostedZoneId = StringParameter.fromStringParameterName(
-      this,
-      'hosted-zone-id',
-      `/${this.region}/${this.stage}/${this.projectName}/delegated-hosted-zone-id`
-    ).stringValue
-
-    return PublicHostedZone.fromPublicHostedZoneAttributes(
-      this,
-      'hosted-zone',
-      {
-        zoneName,
-        hostedZoneId,
-      }
-    )
-  }
-
-  getEventBus(): IEventBus {
-    const eventBusArn = StringParameter.fromStringParameterName(
-      this,
-      'event-bus-arn',
-      `/${this.region}/${this.stage}/${this.projectName}/event-bus-arn`
-    ).stringValue
-
-    return EventBus.fromEventBusArn(this, 'event-bus', eventBusArn)
-  }
-
   static getStack(scope: Construct): Stack {
     const stack = Stack.of(scope)
 
