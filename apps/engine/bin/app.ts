@@ -23,6 +23,9 @@ new RootStack(app, 'engine', {
       serviceName: 'engine',
       projectName,
       stage,
+      openai: {
+        apiKey: process.env.OPENAI_API_KEY as string,
+      },
     },
     stack: Engine,
   },

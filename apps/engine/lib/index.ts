@@ -4,9 +4,11 @@ import { Stack } from '@internal/cdk-utils/stack'
 import { Archive, EventBus } from 'aws-cdk-lib/aws-events'
 import { StringParameter } from 'aws-cdk-lib/aws-ssm'
 import { PersistEvents } from '../constructs/persist-events'
+import type { OpenAIProps } from '@internal/cdk-utils/types'
+import { GenerateMotivationalMessage } from '../constructs/generate-motivational-message'
 
 export interface EngineProps extends StackProps {
-  //
+  openai: OpenAIProps
 }
 
 export class Engine extends Stack {
@@ -39,6 +41,11 @@ export class Engine extends Stack {
 
     new PersistEvents(this, 'persist-events', {
       eventBus,
+    })
+
+    new GenerateMotivationalMessage(this, 'generate-motivational-message', {
+      eventBus,
+      openai: props.openai,
     })
   }
 }
