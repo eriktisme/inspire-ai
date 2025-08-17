@@ -1,0 +1,14 @@
+{
+  "db": {
+    "ssl": true
+  },
+  "failOnError": true,
+  "srcDir": "./src",
+  "transforms": [
+    {
+      "mode": "sql",
+      "include": "./data/**/*.sql",
+      "emitTemplate": "{{dir}}/{{name}}.queries.ts"
+    }
+  ]
+}

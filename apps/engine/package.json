@@ -1,0 +1,27 @@
+{
+  "name": "engine",
+  "version": "0.1.0",
+  "bin": {
+    "app": "bin/app.js"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "cdk": "cdk",
+    "cdk:synth": "cdk synth",
+    "codegen": "pgtyped",
+    "lint": "eslint '**/*.ts'",
+    "test": "jest --passWithNoTests",
+    "test-coverage": "jest --coverage --passWithNoTests",
+    "typeCheck": "tsc --noEmit",
+    "typegen": "pgtyped",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@internal/api-schema": "workspace:*",
+    "@internal/events-schema": "workspace:*"
+  },
+  "devDependencies": {
+    "@internal/cdk-utils": "workspace:*",
+    "@internal/tsconfig": "workspace:*"
+  }
+}
