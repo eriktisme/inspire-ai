@@ -1,7 +1,6 @@
 import { Construct } from 'constructs'
 import { Rule, Schedule, type EventBus } from 'aws-cdk-lib/aws-events'
 import { Duration } from 'aws-cdk-lib'
-import { EventConsumer } from '@internal/cdk-utils/event-consumer'
 import type { OpenAIProps } from '@internal/cdk-utils/types'
 import { Stack } from '@internal/cdk-utils/stack'
 import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets'

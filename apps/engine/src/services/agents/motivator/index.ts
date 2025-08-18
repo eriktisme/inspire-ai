@@ -52,7 +52,7 @@ Never repeat the exact same message twice.
           },
         ],
         model: config.defaultModel,
-        temperature: config.defaultModel === 'gpt-5' ? 1: 0.4,
+        temperature: config.defaultModel === 'gpt-5' ? 1 : 0.4,
       })
 
       const result = response.choices[0].message.content
