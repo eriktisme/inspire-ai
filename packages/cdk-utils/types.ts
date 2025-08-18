@@ -6,3 +6,9 @@ export interface ClerkProps {
 export interface OpenAIProps {
   apiKey: string
 }
+
+export interface TwilioProps {
+  authToken: string
+  accountSid: string
+  phoneNumber: string
+}
