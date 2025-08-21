@@ -25,6 +25,7 @@ export const env = createEnv({
   runtimeEnv: {
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     CLERK_WEBHOOK_SECRET: process.env.CLERK_WEBHOOK_SECRET,
+    DATABASE_URL: process.env.DATABASE_URL,
     NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL:
       process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL,
     NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL:
@@ -44,8 +45,12 @@ export const env = createEnv({
    * 💡 You'll get type errors if not all variables from `server` & `client` are included here.
    */
   server: {
+    // Clerk
     CLERK_SECRET_KEY: z.string().min(1),
     CLERK_WEBHOOK_SECRET: z.string().min(1),
+
+    // Database
+    DATABASE_URL: z.string().min(1),
   },
   skipValidation: !!process.env.CI || !!process.env.SKIP_ENV_VALIDATION,
 })

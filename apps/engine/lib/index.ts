@@ -9,6 +9,7 @@ import { GenerateMotivationalMessage } from '../constructs/generate-motivational
 import { SendMotivationalMessages } from '../constructs/send-motivational-messages'
 
 export interface EngineProps extends StackProps {
+  databaseUrl: string
   openai: OpenAIProps
   twilio: TwilioProps
 }
