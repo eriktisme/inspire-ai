@@ -8,7 +8,7 @@ export interface OpenAIProps {
 }
 
 export interface TwilioProps {
-  authToken: string
   accountSid: string
+  authToken: string
   phoneNumber: string
 }

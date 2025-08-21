@@ -1,11 +1,6 @@
 import type { StackProps as BaseStackProps } from 'aws-cdk-lib'
 import { Stack as BaseStack } from 'aws-cdk-lib'
 import type { Construct } from 'constructs'
-import { StringParameter } from 'aws-cdk-lib/aws-ssm'
-import type { IPublicHostedZone } from 'aws-cdk-lib/aws-route53'
-import { PublicHostedZone } from 'aws-cdk-lib/aws-route53'
-import type { IEventBus } from 'aws-cdk-lib/aws-events'
-import { EventBus } from 'aws-cdk-lib/aws-events'
 
 export interface StackProps extends BaseStackProps {
   projectName: string
