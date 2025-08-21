@@ -10,7 +10,7 @@ type MessageCreatedEventDetail = {
 
 export class MessageCreatedEvent {
   static toEventBridgeEventDetail = (
-    data: Data,
+    data: Data
   ): EventBridgeEvent<
     'message.created',
     MessageCreatedEventDetail
