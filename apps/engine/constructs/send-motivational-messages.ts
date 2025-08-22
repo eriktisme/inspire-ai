@@ -5,6 +5,7 @@ import { Stack } from '@internal/cdk-utils/stack'
 import { EventConsumer } from '@internal/cdk-utils/event-consumer'
 
 interface Props {
+  databaseUrl: string
   eventBus: EventBus
   twilio: TwilioProps
 }
@@ -20,6 +21,7 @@ export class SendMotivationalMessages extends Construct {
         serviceName: stack.serviceName,
         entry: 'src/functions/send-motivational-messages/index.ts',
         environment: {
+          DATABASE_URL: props.databaseUrl,
           EVENT_BUS_NAME: props.eventBus.eventBusName,
           TWILIO_ACCOUNT_SID: props.twilio.accountSid,
           TWILIO_AUTH_TOKEN: props.twilio.authToken,

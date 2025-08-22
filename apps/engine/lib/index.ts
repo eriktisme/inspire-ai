@@ -52,6 +52,7 @@ export class Engine extends Stack {
     })
 
     new SendMotivationalMessages(this, 'send-motivational-messages', {
+      databaseUrl: props.databaseUrl,
       eventBus,
       twilio: props.twilio,
     })
