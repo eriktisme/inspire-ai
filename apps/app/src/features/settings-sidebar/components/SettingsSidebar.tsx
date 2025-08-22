@@ -12,7 +12,7 @@ import {
   SidebarGroupContent,
 } from '@internal/design-system/components/ui/sidebar'
 import type { ComponentProps } from 'react'
-import { ChevronLeftIcon, Settings2Icon } from 'lucide-react'
+import { ChevronLeftIcon, Settings2Icon, UserCog2Icon } from 'lucide-react'
 import {
   Tooltip,
   TooltipContent,
@@ -22,6 +22,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const accountRoutes = [
+  {
+    key: 'profile',
+    label: 'Profile',
+    icon: <UserCog2Icon />,
+  },
   {
     key: 'preferences',
     label: 'Preferences',
