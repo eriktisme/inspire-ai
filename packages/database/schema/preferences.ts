@@ -9,7 +9,8 @@ export const preferences = pgTable('preferences', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: varchar('user_id')
     .references(() => users.id, { onDelete: 'cascade' })
-    .notNull(),
+    .notNull()
+    .unique(),
   frequency: frequencyType('frequency').default('daily'),
   createdAt: timestamp({
     withTimezone: true,

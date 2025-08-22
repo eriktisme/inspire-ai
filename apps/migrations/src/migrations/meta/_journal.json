@@ -15,6 +15,13 @@
       "when": 1755795100604,
       "tag": "0001_slimy_unicorn",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1755850440683,
+      "tag": "0002_hesitant_lucky_pierre",
+      "breakpoints": true
     }
   ]
 }

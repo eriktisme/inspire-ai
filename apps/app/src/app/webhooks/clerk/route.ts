@@ -4,13 +4,13 @@ import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 import { Webhook } from 'svix'
 import { createConnection } from '@internal/database/connection'
-import { users } from '@internal/database/schema'
+import { preferences, users } from '@internal/database/schema'
 import { eq } from 'drizzle-orm'
 
 const connection = createConnection(env.DATABASE_URL)
 
 const handleUserCreated = async (data: UserJSON) => {
-  await connection
+  const [user] = await connection
     .insert(users)
     .values({
       id: data.id,
@@ -19,9 +19,29 @@ const handleUserCreated = async (data: UserJSON) => {
       createdAt: new Date(data.created_at),
       updatedAt: new Date(data.updated_at),
     })
+    .returning()
     .onConflictDoNothing({
       target: users.id,
     })
+
+  if (!user) {
+    return new Response('Failed to create user', { status: 500 })
+  }
+
+  const [userPreferences] = await connection
+    .insert(preferences)
+    .values({
+      userId: user.id,
+      frequency: 'daily',
+    })
+    .returning()
+    .onConflictDoNothing({
+      target: users.id,
+    })
+
+  if (!userPreferences) {
+    return new Response('Failed to create user preferences', { status: 500 })
+  }
 
   return new Response('User created', { status: 201 })
 }
@@ -48,14 +68,13 @@ export const POST = async (request: Request): Promise<Response> => {
     return NextResponse.json({ message: 'Not configured', ok: false })
   }
 
-  // Get the headers
   const headerPayload = await headers()
   const svixId = headerPayload.get('svix-id')
   const svixTimestamp = headerPayload.get('svix-timestamp')
   const svixSignature = headerPayload.get('svix-signature')
 
   if (!svixId || !svixTimestamp || !svixSignature) {
-    return new Response('Error occured -- no svix headers', {
+    return new Response('Error occurred -- no svix headers', {
       status: 400,
     })
   }
