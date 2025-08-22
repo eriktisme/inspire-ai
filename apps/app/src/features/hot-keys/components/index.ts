@@ -1,2 +1,2 @@
 export * from './HotKeys'
-export * from './WorkspaceSettingsHotKeys'
+export * from './SettingsHotKeys'

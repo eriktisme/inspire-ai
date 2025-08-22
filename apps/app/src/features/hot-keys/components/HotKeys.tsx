@@ -1,14 +1,12 @@
 'use client'
 
 import { useHotkeys } from 'react-hotkeys-hook'
-import { useClerk, useOrganization } from '@clerk/nextjs'
+import { useClerk } from '@clerk/nextjs'
 import { env } from '@/env'
 import { useRouter } from 'next/navigation'
 
 export const HotKeys = () => {
   const { signOut } = useClerk()
-
-  const { organization } = useOrganization()
 
   const router = useRouter()
 
@@ -23,7 +21,7 @@ export const HotKeys = () => {
   useHotkeys('g+s', (evt) => {
     evt.preventDefault()
 
-    router.push(`/${organization?.slug}/settings/account/preferences`)
+    router.push('/settings/account/preferences')
   })
 
   return null
