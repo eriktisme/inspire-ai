@@ -6,7 +6,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -22,7 +21,6 @@ interface Props extends ComponentProps<typeof Sidebar> {
 export const AppSidebar = (props: Props) => {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>{/* Placeholder */}</SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
