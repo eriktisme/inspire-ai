@@ -17,7 +17,8 @@ import {
 } from '@internal/design-system/components/ui/form'
 import { Badge } from '@internal/design-system/components/ui/badge'
 import { XIcon } from 'lucide-react'
-import { Preferences, UpdatePreferenceBodySchema, useUpdatePreferences } from '../api'
+import type { Preferences } from '../api'
+import { UpdatePreferenceBodySchema, useUpdatePreferences } from '../api'
 import { useAutoSave } from '@/lib/use-auto-save'
 
 const commonThemes = [
