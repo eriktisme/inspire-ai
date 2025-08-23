@@ -47,6 +47,7 @@ export class Engine extends Stack {
     })
 
     new GenerateMotivationalMessage(this, 'generate-motivational-message', {
+      databaseUrl: props.databaseUrl,
       eventBus,
       openai: props.openai,
     })

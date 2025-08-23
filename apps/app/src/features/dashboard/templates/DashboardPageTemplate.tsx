@@ -5,6 +5,9 @@ import { useQueries } from '@tanstack/react-query'
 import { getPreferencesOptions } from '@/features/dashboard'
 import { queryConfig } from '@/lib/react-query'
 
+const defaultGoals = ['Run a marathon', 'Build a startup']
+const defaultThemes = ['Fitness & Health', 'Career Growth']
+
 export const DashboardPageTemplate = () => {
   const [preferencesQuery] = useQueries({
     queries: [
@@ -31,11 +34,18 @@ export const DashboardPageTemplate = () => {
           preference={
             preferencesQuery.data
               ? {
-                  ...preferencesQuery.data,
+                  goals:
+                    preferencesQuery.data.goals.length > 0
+                      ? preferencesQuery.data.goals
+                      : defaultGoals,
+                  themes:
+                    preferencesQuery.data.themes.length > 0
+                      ? preferencesQuery.data.themes
+                      : defaultThemes,
                 }
               : {
-                  goals: [],
-                  themes: [],
+                  goals: defaultGoals,
+                  themes: defaultThemes,
                 }
           }
         />

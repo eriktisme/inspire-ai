@@ -7,6 +7,7 @@ import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets'
 import { NodeJSLambda } from '@internal/cdk-utils/lambda'
 
 interface Props {
+  databaseUrl: string
   eventBus: EventBus
   openai: OpenAIProps
 }
@@ -23,8 +24,9 @@ export class GenerateMotivationalMessage extends Construct {
       serviceName: stack.serviceName,
       entry: 'src/functions/generate-motivational-message/index.ts',
       environment: {
-        OPENAI_API_KEY: props.openai.apiKey,
+        DATABASE_URL: props.databaseUrl,
         EVENT_BUS_NAME: props.eventBus.eventBusName,
+        OPENAI_API_KEY: props.openai.apiKey,
       },
       timeout,
     })

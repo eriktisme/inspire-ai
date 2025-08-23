@@ -16,7 +16,8 @@ interface Deps {
 }
 
 interface Params {
-  // Add any parameters needed for the motivator service
+  goals: string[]
+  themes: string[]
 }
 
 export class MotivatorService {
@@ -24,14 +25,11 @@ export class MotivatorService {
     //
   }
 
-  async call(_: Params): Promise<null | string> {
-    /**
-     * TODO:
-     *
-     * In the near future, I want to add support for different types of life-goals.
-     */
+  async call(params: Params): Promise<null | string> {
     const prompt = `
-Generate a motivational quote for someone training for a marathon who needs encouragement to stay consistent.
+Generate a motivational message under 160 characters.
+My goals are: ${params.goals.join(', ') ?? 'general well-being'}.
+My motivational themes are: ${params.themes.join(', ') ?? 'positivity and resilience'}.
 `
     try {
       const response = await this.deps.openai.chat.completions.create({
@@ -39,11 +37,15 @@ Generate a motivational quote for someone training for a marathon who needs enco
           {
             role: 'system',
             content: `
-You are an AI assistant that generates short, powerful, and uplifting daily motivational messages. 
-Your tone should be positive, encouraging, and easy to understand. 
-Keep the message under 160 characters. 
-Avoid clichés and instead focus on authentic, modern, and relatable inspiration. 
-Never repeat the exact same message twice.
+You are an AI assistant that generates short, powerful, and uplifting daily motivational messages.
+Constraints:
+- Message must be plain English only (no emojis, no special characters).
+- Message must be at most 160 characters (fits in one SMS).
+- Your tone should be positive, encouraging, and easy to understand.
+- Avoid clichés and instead focus on authentic, modern, and relatable inspiration.
+- Avoid repetition across different requests.
+- Personalize the message based on the user's goals and motivational themes. 
+- Never repeat the exact same message twice.
             `,
           },
           {
