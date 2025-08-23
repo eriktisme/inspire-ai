@@ -17,16 +17,20 @@ import {
   FormItem,
   FormMessage,
 } from '@internal/design-system/components/ui/form'
-import { Input } from '@internal/design-system/components/ui/input'
 import { Button } from '@internal/design-system/components/ui/button'
-import { useUser } from '@clerk/nextjs'
+import { useUser, useReverification } from '@clerk/nextjs'
 import { useTransition } from 'react'
+import { PhoneInput } from '@internal/design-system/components/ui/phone-input'
+import type { Country } from 'react-phone-number-input'
+import type { ClerkAPIResponseError } from '@clerk/types'
+import { toast } from 'sonner'
 
 const FormSchema = z.object({
   phoneNumber: z.string().min(1),
 })
 
 interface Props {
+  defaultCountry: Country
   defaultValues: z.infer<typeof FormSchema>
 }
 
@@ -35,17 +39,46 @@ export const ChangePhoneNumber = (props: Props) => {
 
   const [isPending, startTransition] = useTransition()
 
+  const createPhoneNumber = useReverification((phoneNumber: string) =>
+    user?.createPhoneNumber({ phoneNumber })
+  )
+
   const form = useZodForm(FormSchema, {
     defaultValues: props.defaultValues,
   })
 
-  const onSubmit = form.handleSubmit((_) => {
+  const onSubmit = form.handleSubmit((values) => {
     if (!isLoaded) {
       return
     }
 
     startTransition(async () => {
-      user?.reload()
+      try {
+        const result = await createPhoneNumber(values.phoneNumber)
+
+        if (!result) {
+          /**
+           * TODO:
+           *
+           * - Handle failure
+           */
+          console.error('Failed to create phone number')
+
+          return
+        }
+
+        await user?.reload()
+
+        user?.phoneNumbers.find((phoneNumber) => phoneNumber.id === result.id)
+      } catch (e) {
+        const error = e as ClerkAPIResponseError
+
+        for (const err of error.errors) {
+          if (err.code === 'unsupported_country_code') {
+            toast.warning('The country code is not supported')
+          }
+        }
+      }
     })
   })
 
@@ -64,13 +97,11 @@ export const ChangePhoneNumber = (props: Props) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
+                    <PhoneInput
+                      defaultCountry={props.defaultCountry}
+                      international
                       {...field}
                       autoComplete="off"
-                      autoCapitalize="none"
-                      autoCorrect="off"
-                      spellCheck="false"
-                      type="tel"
                     />
                   </FormControl>
                   <FormMessage />

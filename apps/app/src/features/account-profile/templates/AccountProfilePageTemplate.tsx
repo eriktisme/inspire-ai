@@ -27,6 +27,7 @@ export const AccountProfilePageTemplate = () => {
       />
 
       <ChangePhoneNumber
+        defaultCountry="ES"
         defaultValues={{
           phoneNumber: '',
         }}
