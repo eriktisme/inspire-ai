@@ -45,11 +45,14 @@ export const buildHandler = async (event: SQSEvent) => {
    */
   const result = await connection
     .select({
+      id: users.id,
       phoneNumber: users.phoneNumber,
     })
     .from(users)
     .leftJoin(preferences, eq(users.id, preferences.userId))
     .where(ne(preferences.frequency, 'paused'))
+
+  logger.info(`Sending messages to ${result.length} users`)
 
   for (const record of event.Records) {
     const { data } = MessageCreatedEvent.fromEventBridgeEvent(
@@ -72,11 +75,18 @@ export const buildHandler = async (event: SQSEvent) => {
          *    not sure if the library throws,
          *    or returns in the promise the message status
          */
-        await client.messages.create({
+        const response = await client.messages.create({
           body: data.message,
           from: config.phoneNumber,
           to: user.phoneNumber,
         })
+
+        if (response.status === 'failed' || response.status === 'undelivered') {
+          logger.error('Message failed to send', {
+            user: user.id,
+            error: response.errorMessage,
+          })
+        }
       } catch (error) {
         logger.error('Failed to send message', {
           error: (error as Error).message,
