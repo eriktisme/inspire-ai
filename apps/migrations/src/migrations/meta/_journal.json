@@ -22,6 +22,13 @@
       "when": 1755850440683,
       "tag": "0002_hesitant_lucky_pierre",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1755967936214,
+      "tag": "0003_wealthy_talon",
+      "breakpoints": true
     }
   ]
 }

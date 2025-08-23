@@ -3,7 +3,6 @@ import {
   SidebarInset,
   SidebarProvider,
 } from '@internal/design-system/components/ui/sidebar'
-import { AppSidebar } from '@/features/app-sidebar'
 import { HotKeys } from '@/features/hot-keys'
 import { AppHeader } from '@/features/app-header'
 
@@ -15,7 +14,6 @@ export default async function Layout({
   return (
     <>
       <SidebarProvider>
-        <AppSidebar />
         <SidebarInset>
           <AppHeader />
           <div className="flex flex-1 flex-col">
