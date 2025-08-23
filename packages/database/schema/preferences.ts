@@ -12,6 +12,8 @@ export const preferences = pgTable('preferences', {
     .notNull()
     .unique(),
   frequency: frequencyType('frequency').default('daily'),
+  goals: varchar('goals', { length: 256 }).array().notNull().default([]),
+  themes: varchar('themes', { length: 256 }).array().notNull().default([]),
   createdAt: timestamp({
     withTimezone: true,
   })
