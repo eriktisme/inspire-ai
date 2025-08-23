@@ -20,8 +20,7 @@
     "@internal/api-schema": "workspace:*",
     "@internal/database": "workspace:*",
     "@internal/events-schema": "workspace:*",
-    "openai": "^5.12.2",
-    "twilio": "^5.8.0"
+    "openai": "^5.12.2"
   },
   "devDependencies": {
     "@internal/cdk-utils": "workspace:*",
