@@ -3,7 +3,7 @@ import {
   SidebarInset,
   SidebarProvider,
 } from '@internal/design-system/components/ui/sidebar'
-import { HotKeys, WorkspaceSettingsHotKeys } from '@/features/hot-keys'
+import { HotKeys, SettingsHotKeys } from '@/features/hot-keys'
 import { SettingsSidebar } from '@/features/settings-sidebar'
 
 export default function Layout({ children }: Readonly<PropsWithChildren>) {
@@ -16,7 +16,7 @@ export default function Layout({ children }: Readonly<PropsWithChildren>) {
         </SidebarInset>
       </SidebarProvider>
       <HotKeys />
-      <WorkspaceSettingsHotKeys />
+      <SettingsHotKeys />
     </>
   )
 }

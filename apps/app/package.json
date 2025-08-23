@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@clerk/backend": "^2.4.1",
-    "@clerk/nextjs": "^6.31.3",
+    "@clerk/nextjs": "^6.31.4",
+    "@clerk/types": "^4.81.0",
     "@hookform/resolvers": "^3.10.0",
     "@internal/database": "workspace:*",
     "@internal/design-system": "workspace:*",
@@ -25,6 +26,7 @@
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.54.2",
     "react-hotkeys-hook": "^5.1.0",
+    "react-phone-number-input": "^3.4.12",
     "server-only": "^0.0.1",
     "sonner": "^2.0.6",
     "svix": "^1.25.0",

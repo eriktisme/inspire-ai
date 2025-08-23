@@ -36,6 +36,12 @@ const service = new MotivatorService({
  * This handler is responsible for generating inspirational quotes.
  */
 export const buildHandler = async () => {
+  /**
+   * Future improvements:
+   *  - Use user personalization preferences in prompt
+   *  - Dispatch event per user, with personalized message
+   */
+
   const message = await service.call({
     //
   })

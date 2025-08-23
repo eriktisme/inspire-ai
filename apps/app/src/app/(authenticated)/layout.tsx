@@ -14,6 +14,8 @@ export default async function Layout({
 
   if (!user) {
     redirectToSignIn()
+
+    return null
   }
 
   return <Providers>{children}</Providers>

@@ -14,7 +14,7 @@ export const createMetadata = ({
   ],
   description,
   image,
-  title = 'Atlas',
+  title = 'Inspire AI',
   ...properties
 }: MetadataGenerator): Metadata => {
   const defaultMetadata: Metadata = {
