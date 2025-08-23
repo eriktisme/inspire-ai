@@ -3,30 +3,24 @@ import { Logger } from '@aws-lambda-powertools/logger'
 import z from 'zod'
 import { MessageCreatedEvent } from '@internal/events-schema/message'
 import type { SQSEvent } from 'aws-lambda'
-import twilio from 'twilio'
 import { createConnection } from '@internal/database/connection'
 import { users } from '@internal/database/schema'
 import { inArray } from 'drizzle-orm'
+import { PublishCommand, SNSClient } from '@aws-sdk/client-sns'
 
-new Tracer()
+const tracer = new Tracer()
 
 const logger = new Logger()
 
 const ConfigSchema = z.object({
-  accountSid: z.string().min(1),
-  authToken: z.string().min(1),
   databaseUrl: z.string().min(1),
-  phoneNumber: z.string().min(1),
 })
 
 const config = ConfigSchema.parse({
-  accountSid: process.env.TWILIO_ACCOUNT_SID,
-  authToken: process.env.TWILIO_AUTH_TOKEN,
   databaseUrl: process.env.DATABASE_URL,
-  phoneNumber: process.env.TWILIO_PHONE_NUMBER,
 })
 
-const client = twilio(config.accountSid, config.authToken)
+const client = tracer.captureAWSv3Client(new SNSClient())
 
 const connection = createConnection(config.databaseUrl)
 
@@ -73,25 +67,15 @@ export const buildHandler = async (event: SQSEvent) => {
       return
     }
 
-    try {
-      const response = await client.messages.create({
-        body: data.message,
-        from: config.phoneNumber,
-        to: user.phoneNumber,
+    const message = await client.send(
+      new PublishCommand({
+        Message: data.message,
+        PhoneNumber: user.phoneNumber,
       })
+    )
 
-      if (response.status === 'failed' || response.status === 'undelivered') {
-        logger.error('Message failed to send', {
-          user: user.id,
-          error: response.errorMessage,
-        })
-      }
-    } catch (error) {
-      logger.error('Failed to send message', {
-        error: (error as Error).message,
-      })
-
-      return
+    if (!message.MessageId) {
+      logger.error('Failed to send message', { userId: user.id })
     }
   }
 }

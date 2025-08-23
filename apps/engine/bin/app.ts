@@ -27,11 +27,6 @@ new RootStack(app, 'engine', {
       projectName,
       serviceName: 'engine',
       stage,
-      twilio: {
-        authToken: process.env.TWILIO_AUTH_TOKEN as string,
-        accountSid: process.env.TWILIO_ACCOUNT_SID as string,
-        phoneNumber: process.env.TWILIO_PHONE_NUMBER as string,
-      },
     },
     stack: Engine,
   },

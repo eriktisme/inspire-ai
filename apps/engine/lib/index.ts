@@ -4,14 +4,13 @@ import { Stack } from '@internal/cdk-utils/stack'
 import { Archive, EventBus } from 'aws-cdk-lib/aws-events'
 import { StringParameter } from 'aws-cdk-lib/aws-ssm'
 import { PersistEvents } from '../constructs/persist-events'
-import type { OpenAIProps, TwilioProps } from '@internal/cdk-utils/types'
+import type { OpenAIProps } from '@internal/cdk-utils/types'
 import { GenerateMotivationalMessage } from '../constructs/generate-motivational-message'
 import { SendMotivationalMessages } from '../constructs/send-motivational-messages'
 
 export interface EngineProps extends StackProps {
   databaseUrl: string
   openai: OpenAIProps
-  twilio: TwilioProps
 }
 
 export class Engine extends Stack {
@@ -55,7 +54,6 @@ export class Engine extends Stack {
     new SendMotivationalMessages(this, 'send-motivational-messages', {
       databaseUrl: props.databaseUrl,
       eventBus,
-      twilio: props.twilio,
     })
   }
 }
