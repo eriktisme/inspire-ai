@@ -2,37 +2,34 @@ import type { MutationConfig } from '@/lib/react-query'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 
-export const UpdatePreferenceBodySchema = z.object({
-  goals: z.array(z.string()).min(1),
-  themes: z.array(z.string()).min(1),
+export const UpdateProfileBodySchema = z.object({
+  phoneNumber: z.string().min(10).max(15).optional(),
 })
 
-export type UpdatePreferenceBody = z.infer<typeof UpdatePreferenceBodySchema>
+export type UpdateProfileBody = z.infer<typeof UpdateProfileBodySchema>
 
-type UseUpdatePreferencesOptions = {
+type UseUpdateProfileOptions = {
   mutationConfig?: MutationConfig<
-    (
-      body: UpdatePreferenceBody
-    ) => Promise<{ error?: string; success: boolean }>
+    (body: UpdateProfileBody) => Promise<{ error?: string; success: boolean }>
   >
 }
 
-export const useUpdatePreferences = ({
+export const useUpdateProfile = ({
   mutationConfig,
-}: UseUpdatePreferencesOptions) => {
+}: UseUpdateProfileOptions) => {
   const queryClient = useQueryClient()
 
   const { onSuccess, ...restConfig } = mutationConfig ?? {}
 
   return useMutation({
     onSuccess: async (...args) => {
-      await queryClient.invalidateQueries({ queryKey: ['preferences'] })
+      await queryClient.invalidateQueries({ queryKey: ['profile'] })
 
       onSuccess?.(...args)
     },
     ...restConfig,
-    mutationFn: async (body: UpdatePreferenceBody) => {
-      const response = await fetch('/api/common/preferences', {
+    mutationFn: async (body: UpdateProfileBody) => {
+      const response = await fetch('/api/common/profile', {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -43,7 +40,7 @@ export const useUpdatePreferences = ({
 
       if (!response.ok) {
         return {
-          error: 'Failed to update preferences',
+          error: 'Failed to update profile',
           success: false,
         }
       }

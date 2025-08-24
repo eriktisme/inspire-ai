@@ -18,11 +18,10 @@ import {
   FormMessage,
 } from '@internal/design-system/components/ui/form'
 import { Button } from '@internal/design-system/components/ui/button'
-import { useUser, useReverification } from '@clerk/nextjs'
-import { useTransition } from 'react'
+import { useReverification } from '@clerk/nextjs'
 import { PhoneInput } from '@internal/design-system/components/ui/phone-input'
 import type { Country } from 'react-phone-number-input'
-import type { ClerkAPIResponseError } from '@clerk/types'
+import { useUpdateProfile } from '../api'
 import { toast } from 'sonner'
 
 const FormSchema = z.object({
@@ -35,51 +34,34 @@ interface Props {
 }
 
 export const ChangePhoneNumber = (props: Props) => {
-  const { isLoaded, user } = useUser()
+  const updateProfile = useUpdateProfile({
+    mutationConfig: {
+      onSuccess: () => {
+        //
+      },
+    },
+  })
 
-  const [isPending, startTransition] = useTransition()
-
-  const createPhoneNumber = useReverification((phoneNumber: string) =>
-    user?.createPhoneNumber({ phoneNumber })
+  const changePhoneNumber = useReverification((phoneNumber: string) =>
+    updateProfile.mutateAsync({
+      phoneNumber,
+    })
   )
 
   const form = useZodForm(FormSchema, {
     defaultValues: props.defaultValues,
   })
 
-  const onSubmit = form.handleSubmit((values) => {
-    if (!isLoaded) {
+  const onSubmit = form.handleSubmit(async (values) => {
+    const result = await changePhoneNumber(values.phoneNumber)
+
+    if (!result.success) {
+      toast.error('Failed to update phone number')
+
       return
     }
 
-    startTransition(async () => {
-      try {
-        const result = await createPhoneNumber(values.phoneNumber)
-
-        if (!result) {
-          /**
-           * TODO:
-           *
-           * - Handle failure
-           */
-          console.error('Failed to create phone number')
-
-          return
-        }
-
-        await user?.reload()
-
-        user?.phoneNumbers.find((phoneNumber) => phoneNumber.id === result.id)
-      } catch (e) {
-        const error = e as ClerkAPIResponseError
-
-        for (const err of error.errors) {
-          if (err.code === 'unsupported_country_code') {
-            toast.warning('The country code is not supported')
-          }
-        }
-      }
-    })
+    toast('Phone number updated successfully.')
   })
 
   return (
@@ -111,7 +93,7 @@ export const ChangePhoneNumber = (props: Props) => {
           </CardContent>
           <CardFooter>
             <Button
-              loading={isPending}
+              loading={updateProfile.isPending}
               disabled={!form.formState.isValid}
               type="submit"
             >

@@ -2,11 +2,23 @@
 
 import { useUser } from '@clerk/nextjs'
 import { ChangePhoneNumber, Name } from '../components'
+import { useQueries } from '@tanstack/react-query'
+import { queryConfig } from '@/lib/react-query'
+import { getProfileOptions } from '../api'
 
 export const AccountProfilePageTemplate = () => {
   const { isLoaded, user } = useUser()
 
-  if (!isLoaded) {
+  const [profileQuery] = useQueries({
+    queries: [
+      {
+        ...getProfileOptions,
+        ...queryConfig,
+      },
+    ],
+  })
+
+  if (!isLoaded || profileQuery.isLoading) {
     return <div>Loading...</div>
   }
 
@@ -29,7 +41,7 @@ export const AccountProfilePageTemplate = () => {
       <ChangePhoneNumber
         defaultCountry="ES"
         defaultValues={{
-          phoneNumber: '',
+          phoneNumber: profileQuery.data?.phoneNumber ?? '',
         }}
       />
     </div>
