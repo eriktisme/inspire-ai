@@ -17,9 +17,10 @@ import {
 } from '@internal/design-system/components/ui/form'
 import { Badge } from '@internal/design-system/components/ui/badge'
 import { XIcon } from 'lucide-react'
-import type { Preferences } from '../api'
-import { UpdatePreferenceBodySchema, useUpdatePreferences } from '../api'
+import { PreferencesSchema } from '../api'
+import { useUpdatePreferences } from '../api'
 import { useAutoSave } from '@/lib/use-auto-save'
+import type { z } from 'zod'
 
 const commonThemes = [
   'Fitness & Health',
@@ -47,12 +48,16 @@ const commonGoals = [
   'Eat healthier',
 ]
 
+const FormSchema = PreferencesSchema.omit({
+  frequency: true,
+})
+
 interface Props {
-  preference: Preferences
+  preference: z.infer<typeof FormSchema>
 }
 
 export const ManageGoalsAndDirection = (props: Props) => {
-  const form = useZodForm(UpdatePreferenceBodySchema, {
+  const form = useZodForm(FormSchema, {
     defaultValues: {
       goals: props.preference.goals,
       themes: props.preference.themes,
@@ -84,7 +89,7 @@ export const ManageGoalsAndDirection = (props: Props) => {
         <CardHeader>
           <CardTitle>Manage Goals and Direction</CardTitle>
           <CardDescription>
-            Define your personal goals and motivational themes
+            Define your personal goals and motivational themes.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">

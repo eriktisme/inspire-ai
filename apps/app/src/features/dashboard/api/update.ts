@@ -2,10 +2,13 @@ import type { MutationConfig } from '@/lib/react-query'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 
-export const UpdatePreferenceBodySchema = z.object({
-  goals: z.array(z.string()).min(1),
-  themes: z.array(z.string()).min(1),
-})
+export const UpdatePreferenceBodySchema = z
+  .object({
+    goals: z.array(z.string()).min(1),
+    themes: z.array(z.string()).min(1),
+    frequency: z.enum(['daily', 'paused']),
+  })
+  .partial()
 
 export type UpdatePreferenceBody = z.infer<typeof UpdatePreferenceBodySchema>
 

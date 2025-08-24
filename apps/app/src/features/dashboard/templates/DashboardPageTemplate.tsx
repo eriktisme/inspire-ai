@@ -1,6 +1,6 @@
 'use client'
 
-import { ManageGoalsAndDirection } from '../components'
+import { ManageFrequency, ManageGoalsAndDirection } from '../components'
 import { useQueries } from '@tanstack/react-query'
 import { getPreferencesOptions } from '@/features/dashboard'
 import { queryConfig } from '@/lib/react-query'
@@ -30,25 +30,32 @@ export const DashboardPageTemplate = () => {
       {preferencesQuery.isLoading ? (
         <div>Loading...</div>
       ) : (
-        <ManageGoalsAndDirection
-          preference={
-            preferencesQuery.data
-              ? {
-                  goals:
-                    preferencesQuery.data.goals.length > 0
-                      ? preferencesQuery.data.goals
-                      : defaultGoals,
-                  themes:
-                    preferencesQuery.data.themes.length > 0
-                      ? preferencesQuery.data.themes
-                      : defaultThemes,
-                }
-              : {
-                  goals: defaultGoals,
-                  themes: defaultThemes,
-                }
-          }
-        />
+        <>
+          <ManageGoalsAndDirection
+            preference={
+              preferencesQuery.data
+                ? {
+                    goals:
+                      preferencesQuery.data.goals.length > 0
+                        ? preferencesQuery.data.goals
+                        : defaultGoals,
+                    themes:
+                      preferencesQuery.data.themes.length > 0
+                        ? preferencesQuery.data.themes
+                        : defaultThemes,
+                  }
+                : {
+                    goals: defaultGoals,
+                    themes: defaultThemes,
+                  }
+            }
+          />
+          <ManageFrequency
+            preference={{
+              frequency: preferencesQuery.data?.frequency ?? 'daily',
+            }}
+          />
+        </>
       )}
     </div>
   )
