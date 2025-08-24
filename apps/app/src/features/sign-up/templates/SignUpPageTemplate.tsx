@@ -19,7 +19,7 @@ export const SignUpPageTemplate = () => {
         <div className="flex h-6 w-6 items-center justify-center rounded-md">
           <GalleryVerticalEnd className="size-4" />
         </div>
-        Inspire AI
+        Inspire
       </Link>
       <Suspense>
         <SignUpForm />
