@@ -48,7 +48,7 @@ export const SettingsSidebar = (props: Props) => {
           <SidebarMenuItem>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link href="/">
+                <Link href="/dashboard">
                   <SidebarMenuButton>
                     <ChevronLeftIcon />
                     <span>Back to app</span>
