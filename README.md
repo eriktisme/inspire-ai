@@ -1,4 +1,4 @@
-# Inspire AI
+# Inspire
 
 ## Getting started
 
