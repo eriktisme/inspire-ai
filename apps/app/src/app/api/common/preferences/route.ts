@@ -5,6 +5,7 @@ import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { preferences } from '@internal/database/schema'
 import { eq } from 'drizzle-orm'
+import type { PgUpdateSetSource } from 'drizzle-orm/pg-core'
 
 const connection = createConnection(env.DATABASE_URL)
 
@@ -36,6 +37,7 @@ export async function GET() {
       {
         goals: [],
         themes: [],
+        frequency: 'daily',
       },
       { status: 200 }
     )
@@ -45,6 +47,7 @@ export async function GET() {
     {
       goals: preference.goals,
       themes: preference.themes,
+      frequency: preference.frequency,
     },
     { status: 200 }
   )
@@ -77,12 +80,35 @@ export async function PUT(request: Request) {
     )
   }
 
+  const set: PgUpdateSetSource<typeof preferences> = {
+    //
+  }
+
+  if (body.data.goals) {
+    set.goals = body.data.goals
+  }
+
+  if (body.data.themes) {
+    set.themes = body.data.themes
+  }
+
+  if (body.data.frequency) {
+    set.frequency = body.data.frequency
+  }
+
+  if (Object.keys(set).length === 0) {
+    return NextResponse.json(
+      {
+        code: 'invalid_request',
+        statusCode: 400,
+      },
+      { status: 400 }
+    )
+  }
+
   const [preference] = await connection
     .update(preferences)
-    .set({
-      goals: body.data.goals,
-      themes: body.data.themes,
-    })
+    .set(set)
     .where(eq(preferences.userId, userId))
     .returning()
 
@@ -90,6 +116,7 @@ export async function PUT(request: Request) {
     {
       goals: preference.goals,
       themes: preference.themes,
+      frequency: preference.frequency,
     },
     { status: 200 }
   )

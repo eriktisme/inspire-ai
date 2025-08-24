@@ -4,6 +4,7 @@ import { z } from 'zod'
 export const PreferencesSchema = z.object({
   goals: z.array(z.string()),
   themes: z.array(z.string()),
+  frequency: z.enum(['daily', 'paused']),
 })
 
 export type Preferences = z.infer<typeof PreferencesSchema>
