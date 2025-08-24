@@ -13,7 +13,7 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className="min-h-svh font-sans text-neutral-900 antialiased">
+        <body className="flex min-h-svh flex-col font-sans text-neutral-900 antialiased">
           <ClerkLoading>
             <div className="flex min-h-svh flex-1 items-center justify-center">
               <div className="flex flex-row items-center gap-1.5">
