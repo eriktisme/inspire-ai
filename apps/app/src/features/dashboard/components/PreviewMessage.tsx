@@ -1,4 +1,4 @@
-import type { Preview as PreviewMessage } from '../api'
+import type { Preview } from '../api'
 import {
   Card,
   CardDescription,
@@ -10,10 +10,10 @@ import {
 import { ClockIcon } from 'lucide-react'
 
 interface Props {
-  preview: PreviewMessage
+  preview: Preview
 }
 
-export const Preview = (props: Props) => {
+export const PreviewMessage = (props: Props) => {
   return (
     <Card>
       <CardHeader>

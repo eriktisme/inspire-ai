@@ -1,6 +1,9 @@
 import type OpenAI from 'openai'
 import { z } from 'zod'
-import { LogItemMessage, LogItemExtraInput } from '@aws-lambda-powertools/logger/types'
+import type {
+  LogItemMessage,
+  LogItemExtraInput,
+} from '@aws-lambda-powertools/logger/types'
 
 interface LoggerInterface {
   error: (message: LogItemMessage, ...extraInput: LogItemExtraInput) => void
