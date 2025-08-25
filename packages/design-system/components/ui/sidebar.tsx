@@ -171,7 +171,7 @@ function Sidebar({
       <div
         data-slot="sidebar"
         className={cn(
-          'w-(--sidebar-width) flex h-full flex-col bg-neutral-50 text-neutral-700',
+          'w-(--sidebar-width) flex h-full flex-col bg-neutral-50 text-neutral-700 dark:bg-neutral-900 dark:text-white',
           className
         )}
         {...props}
@@ -245,7 +245,7 @@ function Sidebar({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="flex h-full w-full flex-col bg-neutral-50 group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-neutral-100 group-data-[variant=floating]:shadow-sm"
+          className="flex h-full w-full flex-col bg-neutral-50 group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-neutral-100 group-data-[variant=floating]:shadow-sm dark:bg-neutral-900"
         >
           {children}
         </div>
@@ -409,7 +409,7 @@ function SidebarGroupLabel({
       data-slot="sidebar-group-label"
       data-sidebar="group-label"
       className={cn(
-        'outline-hidden flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-neutral-700/70 ring-neutral-100 transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
+        'outline-hidden flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-neutral-700/70 ring-neutral-100 transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 dark:text-white [&>svg]:size-4 [&>svg]:shrink-0',
         'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0',
         className
       )}
@@ -430,7 +430,7 @@ function SidebarGroupAction({
       data-slot="sidebar-group-action"
       data-sidebar="group-action"
       className={cn(
-        'outline-hidden absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-neutral-700 ring-neutral-100 transition-transform hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
+        'outline-hidden absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-neutral-700 ring-neutral-100 transition-transform hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-2 dark:text-white [&>svg]:size-4 [&>svg]:shrink-0',
         // Increases the hit area of the button on mobile.
         'after:absolute after:-inset-2 md:after:hidden',
         'group-data-[collapsible=icon]:hidden',
@@ -478,13 +478,13 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<'li'>) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  'peer/menu-button cursor-pointer flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden ring-neutral-100 transition-[width,height,padding] hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-2 active:bg-neutral-50-accent active:text-neutral-900 disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-neutral-50-accent data-[active=true]:font-medium data-[active=true]:text-neutral-900 data-[state=open]:hover:bg-neutral-100 data-[state=open]:hover:text-neutral-900 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0',
+  'peer/menu-button cursor-pointer flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden ring-neutral-100 transition-[width,height,padding] hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-2 active:bg-neutral-50 active:text-neutral-900 disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-neutral-50 data-[active=true]:font-medium data-[active=true]:text-neutral-900 data-[state=open]:hover:bg-neutral-100 data-[state=open]:hover:text-neutral-900 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0',
   {
     variants: {
       variant: {
-        default: 'hover:bg-neutral-100 hover:text-neutral-900',
+        default: 'dark:text-white hover:bg-neutral-100 hover:text-neutral-900',
         outline:
-          'bg-white shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-neutral-100 hover:text-neutral-900 hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))] dark:bg-neutral-950',
+          'bg-white shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-neutral-100 hover:text-neutral-900 hover:shadow-[0_0_0_1px_hsl(var(--sidebar))] dark:bg-neutral-950',
       },
       size: {
         default: 'h-8 text-sm',
@@ -565,7 +565,7 @@ function SidebarMenuAction({
       data-slot="sidebar-menu-action"
       data-sidebar="menu-action"
       className={cn(
-        'outline-hidden absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-neutral-700 ring-neutral-100 transition-transform hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-2 peer-hover/menu-button:text-neutral-900 [&>svg]:size-4 [&>svg]:shrink-0',
+        'outline-hidden absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-neutral-700 ring-neutral-100 transition-transform hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-2 peer-hover/menu-button:text-neutral-900 dark:text-white [&>svg]:size-4 [&>svg]:shrink-0',
         // Increases the hit area of the button on mobile.
         'after:absolute after:-inset-2 md:after:hidden',
         'peer-data-[size=sm]/menu-button:top-1',
@@ -690,8 +690,8 @@ function SidebarMenuSubButton({
       data-size={size}
       data-active={isActive}
       className={cn(
-        'active:bg-neutral-50-accent outline-hidden flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-neutral-700 ring-neutral-100 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-2 active:text-neutral-900 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-neutral-900',
-        'data-[active=true]:bg-neutral-50-accent data-[active=true]:text-neutral-900',
+        'outline-hidden flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-neutral-700 ring-neutral-100 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:ring-2 active:bg-neutral-50 active:text-neutral-900 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-neutral-900',
+        'data-[active=true]:bg-neutral-50 data-[active=true]:text-neutral-900',
         size === 'sm' && 'text-xs',
         size === 'md' && 'text-sm',
         'group-data-[collapsible=icon]:hidden',

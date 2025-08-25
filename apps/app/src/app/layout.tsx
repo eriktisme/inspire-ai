@@ -13,11 +13,11 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className="flex min-h-svh flex-col font-sans text-neutral-900 antialiased">
+        <body className="flex min-h-svh flex-col bg-white font-sans text-neutral-900 antialiased dark:bg-gray-950 dark:text-white">
           <ClerkLoading>
             <div className="flex min-h-svh flex-1 items-center justify-center">
               <div className="flex flex-row items-center gap-1.5">
-                <Loader2Icon className="size-5 animate-spin text-neutral-500" />
+                <Loader2Icon className="size-5 animate-spin text-neutral-500 dark:text-white" />
                 <div className="font-medium text-neutral-700">Loading...</div>
               </div>
             </div>
