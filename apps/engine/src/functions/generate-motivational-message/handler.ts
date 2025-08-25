@@ -1,4 +1,3 @@
-import { MotivatorService } from '@/services/agents'
 import { Tracer } from '@aws-lambda-powertools/tracer'
 import { Logger } from '@aws-lambda-powertools/logger'
 import OpenAI from 'openai'
@@ -12,6 +11,7 @@ import { MessageCreatedEvent } from '@internal/events-schema/message'
 import { createConnection } from '@internal/database/connection'
 import { preferences, users } from '@internal/database/schema'
 import { eq, ne } from 'drizzle-orm'
+import { MotivatorService } from '@internal/agents/motivator'
 
 const tracer = new Tracer()
 
