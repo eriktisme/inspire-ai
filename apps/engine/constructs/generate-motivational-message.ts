@@ -34,7 +34,7 @@ export class GenerateMotivationalMessage extends Construct {
     props.eventBus.grantPutEventsTo(handler)
 
     /**
-     * This rule triggers the Lambda function every day at 8 AM UTC.
+     * This rule triggers the Lambda function every day at 7 AM UTC.
      */
     new Rule(this, 'Rule', {
       schedule: Schedule.cron({

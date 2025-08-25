@@ -8,19 +8,16 @@
     "build": "tsc --noEmit",
     "cdk": "cdk",
     "cdk:synth": "cdk synth",
-    "codegen": "pgtyped",
     "lint": "eslint '**/*.ts'",
     "test": "jest --passWithNoTests",
-    "test-coverage": "jest --coverage --passWithNoTests",
     "typeCheck": "tsc --noEmit",
-    "typegen": "pgtyped",
     "watch": "tsc -w"
   },
   "dependencies": {
+    "@internal/agents": "workspace:*",
     "@internal/api-schema": "workspace:*",
     "@internal/database": "workspace:*",
-    "@internal/events-schema": "workspace:*",
-    "openai": "^5.12.2"
+    "@internal/events-schema": "workspace:*"
   },
   "devDependencies": {
     "@internal/cdk-utils": "workspace:*",

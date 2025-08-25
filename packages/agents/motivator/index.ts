@@ -1,6 +1,10 @@
 import type OpenAI from 'openai'
 import { z } from 'zod'
-import type { LoggerInterface } from '@aws-lambda-powertools/logger/types'
+import { LogItemMessage, LogItemExtraInput } from '@aws-lambda-powertools/logger/types'
+
+interface LoggerInterface {
+  error: (message: LogItemMessage, ...extraInput: LogItemExtraInput) => void
+}
 
 const ConfigSchema = z.object({
   defaultModel: z.string().default('gpt-5'),
@@ -11,7 +15,7 @@ const config = ConfigSchema.parse({
 })
 
 interface Deps {
-  logger: LoggerInterface
+  logger?: LoggerInterface
   openai: OpenAI
 }
 
@@ -65,7 +69,7 @@ Constraints:
 
       return result
     } catch (error) {
-      this.deps.logger.error('Error generating motivation message:', { error })
+      this.deps.logger?.error('Error generating motivation message:', { error })
 
       return null
     }

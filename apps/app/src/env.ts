@@ -37,6 +37,7 @@ export const env = createEnv({
     NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL:
       process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL,
     NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -51,6 +52,9 @@ export const env = createEnv({
 
     // Database
     DATABASE_URL: z.string().min(1),
+
+    // OpenAI
+    OPENAI_API_KEY: z.string().min(1),
   },
   skipValidation: !!process.env.CI || !!process.env.SKIP_ENV_VALIDATION,
 })

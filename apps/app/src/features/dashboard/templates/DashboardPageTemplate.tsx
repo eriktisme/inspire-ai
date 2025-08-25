@@ -1,19 +1,26 @@
 'use client'
 
-import { ManageFrequency, ManageGoalsAndDirection } from '../components'
+import {
+  ManageFrequency,
+  ManageGoalsAndDirection,
+  Preview,
+} from '../components'
 import { useQueries } from '@tanstack/react-query'
-import { getPreferencesOptions } from '@/features/dashboard'
+import { getPreferencesOptions, getPreviewOptions } from '../api'
 import { queryConfig } from '@/lib/react-query'
 
 const defaultGoals = ['Run a marathon', 'Build a startup']
 const defaultThemes = ['Fitness & Health', 'Career Growth']
 
 export const DashboardPageTemplate = () => {
-  const [preferencesQuery] = useQueries({
+  const [preferencesQuery, previewQuery] = useQueries({
     queries: [
       {
         ...getPreferencesOptions,
         ...queryConfig,
+      },
+      {
+        ...getPreviewOptions,
       },
     ],
   })
@@ -26,7 +33,7 @@ export const DashboardPageTemplate = () => {
         scrollbarGutter: 'stable',
       }}
     >
-      <h1 className="mb-6 text-2xl font-medium">Goals & Direction</h1>
+      <h1 className="mb-6 text-2xl font-medium">Daily Motivation</h1>
       {preferencesQuery.isLoading ? (
         <div>Loading...</div>
       ) : (
@@ -50,6 +57,13 @@ export const DashboardPageTemplate = () => {
                   }
             }
           />
+          {previewQuery.isLoading ? null : (
+            <Preview
+              preview={{
+                message: previewQuery.data?.message ?? 'No preview available.',
+              }}
+            />
+          )}
           <ManageFrequency
             preference={{
               frequency: preferencesQuery.data?.frequency ?? 'daily',

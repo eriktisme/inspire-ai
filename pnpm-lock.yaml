@@ -44,6 +44,9 @@ importers:
       drizzle-orm:
         specifier: ^0.44.2
         version: 0.44.2(@neondatabase/serverless@1.0.1)(@types/pg@8.11.6)(postgres@3.4.7)
+      openai:
+        specifier: ^5.15.0
+        version: 5.15.0(ws@8.18.2(bufferutil@4.0.9)(utf-8-validate@6.0.5))(zod@3.24.4)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -180,6 +183,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.10.0
         version: 3.10.0(react-hook-form@7.62.0(react@19.1.0))
+      '@internal/agents':
+        specifier: workspace:*
+        version: link:../../packages/agents
       '@internal/database':
         specifier: workspace:*
         version: link:../../packages/database
@@ -250,6 +256,9 @@ importers:
 
   apps/engine:
     dependencies:
+      '@internal/agents':
+        specifier: workspace:*
+        version: link:../../packages/agents
       '@internal/api-schema':
         specifier: workspace:*
         version: link:../../packages/api-schema
@@ -259,9 +268,6 @@ importers:
       '@internal/events-schema':
         specifier: workspace:*
         version: link:../../packages/events-schema
-      openai:
-        specifier: ^5.12.2
-        version: 5.12.2(ws@8.18.2(bufferutil@4.0.9)(utf-8-validate@6.0.5))(zod@3.24.4)
     devDependencies:
       '@internal/cdk-utils':
         specifier: workspace:*
@@ -291,6 +297,12 @@ importers:
       '@types/node':
         specifier: ^22
         version: 22.16.3
+
+  packages/agents:
+    devDependencies:
+      '@internal/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
 
   packages/api-schema:
     dependencies:
@@ -2741,6 +2753,7 @@ packages:
   '@smithy/middleware-endpoint@4.1.14':
     resolution: {integrity: sha512-+BGLpK5D93gCcSEceaaYhUD/+OCGXM1IDaq/jKUQ+ujB0PTWlWN85noodKw/IPFZhIKFCNEe19PGd/reUMeLSQ==}
     engines: {node: '>=18.0.0'}
+    deprecated: Please upgrade to @smithy/middleware-endpoint@4.1.15 or higher to fix a bug preventing the resolution of ENV and config file custom endpoints https://github.com/smithy-lang/smithy-typescript/issues/1645
 
   '@smithy/middleware-endpoint@4.1.18':
     resolution: {integrity: sha512-ZhvqcVRPZxnZlokcPaTwb+r+h4yOIOCJmx0v2d1bpVlmP465g3qpVSf7wxcq5zZdu4jb0H4yIMxuPwDJSQc3MQ==}
@@ -5965,8 +5978,8 @@ packages:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
 
-  openai@5.12.2:
-    resolution: {integrity: sha512-xqzHHQch5Tws5PcKR2xsZGX9xtch+JQFz5zb14dGqlshmmDAFBFEWmeIpf7wVqWV+w7Emj7jRgkNJakyKE0tYQ==}
+  openai@5.15.0:
+    resolution: {integrity: sha512-kcUdws8K/A8m02I+IqFBwO51gS+87GP89yWEufGbzEi8anBz4FB/bti2QxaJdGwwY4mwJGzx85XO7TuL/Tpu1w==}
     hasBin: true
     peerDependencies:
       ws: ^8.18.0
@@ -14131,7 +14144,7 @@ snapshots:
     dependencies:
       mimic-fn: 2.1.0
 
-  openai@5.12.2(ws@8.18.2(bufferutil@4.0.9)(utf-8-validate@6.0.5))(zod@3.24.4):
+  openai@5.15.0(ws@8.18.2(bufferutil@4.0.9)(utf-8-validate@6.0.5))(zod@3.24.4):
     optionalDependencies:
       ws: 8.18.2(bufferutil@4.0.9)(utf-8-validate@6.0.5)
       zod: 3.24.4
