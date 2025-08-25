@@ -1,7 +1,6 @@
 import type { MutationConfig } from '@/lib/react-query'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
-import { revalidateTag } from 'next/cache'
 
 export const UpdatePreferenceBodySchema = z
   .object({

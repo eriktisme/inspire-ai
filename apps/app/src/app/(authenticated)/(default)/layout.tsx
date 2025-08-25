@@ -5,12 +5,16 @@ import {
 } from '@internal/design-system/components/ui/sidebar'
 import { HotKeys } from '@/features/hot-keys'
 import { AppHeader } from '@/features/app-header'
+import { UserOnboardingDialog } from '@/features/dashboard'
+import { auth } from '@clerk/nextjs/server'
 
 export default async function Layout({
   children,
 }: Readonly<{
   children: ReactNode
 }>) {
+  const { sessionClaims } = await auth()
+
   return (
     <>
       <SidebarProvider>
@@ -26,6 +30,9 @@ export default async function Layout({
         </SidebarInset>
       </SidebarProvider>
       <HotKeys />
+      <UserOnboardingDialog
+        onboardingCompleted={sessionClaims?.metadata.onboardingCompleted}
+      />
     </>
   )
 }
