@@ -3,7 +3,7 @@
 import {
   ManageFrequency,
   ManageGoalsAndDirection,
-  Preview,
+  PreviewMessage,
 } from '../components'
 import { useQueries } from '@tanstack/react-query'
 import { getPreferencesOptions, getPreviewOptions } from '../api'
@@ -58,7 +58,7 @@ export const DashboardPageTemplate = () => {
             }
           />
           {previewQuery.isLoading ? null : (
-            <Preview
+            <PreviewMessage
               preview={{
                 message: previewQuery.data?.message ?? 'No preview available.',
               }}

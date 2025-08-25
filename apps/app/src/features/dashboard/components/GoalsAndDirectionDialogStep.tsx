@@ -1,12 +1,4 @@
-'use client'
-
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from '@internal/design-system/components/ui/card'
+import { useUpdatePreferences } from '../api'
 import { useZodForm } from '@/lib/use-zod-form'
 import {
   Form,
@@ -15,52 +7,32 @@ import {
   FormItem,
   FormLabel,
 } from '@internal/design-system/components/ui/form'
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@internal/design-system/components/ui/dialog'
+import { Button } from '@internal/design-system/components/ui/button'
+import type { UserOnboardingDialogStepProps } from './UserOnboardingDialog'
+import { toast } from 'sonner'
 import { Badge } from '@internal/design-system/components/ui/badge'
 import { XIcon } from 'lucide-react'
-import { PreferencesSchema } from '../api'
-import { useUpdatePreferences } from '../api'
-import { useAutoSave } from '@/lib/use-auto-save'
-import type { z } from 'zod'
+import { commonGoals, commonThemes } from './ManageGoalsAndDirection'
+import { z } from 'zod'
 
-export const commonThemes = [
-  'Fitness & Health',
-  'Career Growth',
-  'Mindfulness',
-  'Productivity',
-  'Relationships',
-  'Personal Development',
-  'Financial Goals',
-  'Creativity',
-]
-
-export const commonGoals = [
-  'Run a marathon',
-  'Build a startup',
-  'Learn a new language',
-  'Get promoted',
-  'Lose weight',
-  'Save money',
-  'Read more books',
-  'Improve relationships',
-  'Start a side hustle',
-  'Learn to code',
-  'Travel more',
-  'Eat healthier',
-]
-
-const FormSchema = PreferencesSchema.omit({
-  frequency: true,
+const FormSchema = z.object({
+  goals: z.array(z.string()).min(1, 'Please select at least one goal'),
+  themes: z.array(z.string()).min(1, 'Please select at least one theme'),
 })
 
-interface Props {
-  preference: z.infer<typeof FormSchema>
-}
-
-export const ManageGoalsAndDirection = (props: Props) => {
+export const GoalsAndDirectionDialogStep = (
+  props: UserOnboardingDialogStepProps
+) => {
   const form = useZodForm(FormSchema, {
     defaultValues: {
-      goals: props.preference.goals,
-      themes: props.preference.themes,
+      goals: [],
+      themes: [],
     },
   })
 
@@ -72,27 +44,28 @@ export const ManageGoalsAndDirection = (props: Props) => {
     },
   })
 
-  useAutoSave({
-    defaultValues: {
-      goals: props.preference.goals,
-      themes: props.preference.themes,
-    },
-    form,
-    onSubmit: (data) => {
-      updatePreferences.mutate(data)
-    },
+  const onSubmit = form.handleSubmit(async (values) => {
+    const result = await updatePreferences.mutateAsync(values)
+
+    if (!result) {
+      toast.error('Failed to update preferences. Please try again.')
+
+      return
+    }
+
+    props.setCurrentStep('phone-number')
   })
 
   return (
-    <Form {...form}>
-      <Card>
-        <CardHeader>
-          <CardTitle>Manage Goals and Direction</CardTitle>
-          <CardDescription>
-            Define your personal goals and motivational themes.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
+    <>
+      <DialogHeader>
+        <DialogTitle>Step 1: Goals and Direction</DialogTitle>
+        <DialogDescription>
+          What motivates you? Select your goals and themes.
+        </DialogDescription>
+      </DialogHeader>
+      <Form {...form}>
+        <form onSubmit={onSubmit} className="space-y-6">
           <FormField
             control={form.control}
             name="goals"
@@ -183,8 +156,17 @@ export const ManageGoalsAndDirection = (props: Props) => {
               </FormItem>
             )}
           />
-        </CardContent>
-      </Card>
-    </Form>
+          <DialogFooter>
+            <Button
+              loading={updatePreferences.isPending}
+              disabled={!form.formState.isValid}
+              type="submit"
+            >
+              Next
+            </Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    </>
   )
 }
