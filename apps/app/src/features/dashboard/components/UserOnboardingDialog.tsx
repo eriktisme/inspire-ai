@@ -10,8 +10,15 @@ import { PhoneNumberDialogStep } from './PhoneNumberDialogStep'
 import { useState } from 'react'
 import { CompleteOnboardingDialogStep } from './CompleteOnboardingDialogStep'
 
+export type OnboardingStep =
+  | 'welcome'
+  | 'goals-and-direction'
+  | 'phone-number'
+  | 'complete'
+  | null
+
 export interface UserOnboardingDialogStepProps {
-  setCurrentStep: (step: string | null) => void
+  setCurrentStep: (step: OnboardingStep) => void
 }
 
 interface Props {
@@ -19,7 +26,7 @@ interface Props {
 }
 
 export const UserOnboardingDialog = (props: Props) => {
-  const [currentStep, setCurrentStep] = useState<string | null>(
+  const [currentStep, setCurrentStep] = useState<OnboardingStep>(
     props.onboardingCompleted ? null : 'welcome'
   )
 
